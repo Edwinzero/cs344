@@ -6,7 +6,7 @@
 
 /* Red Eye Removal
    ===============
-   
+
    For this assignment we are implementing red eye removal.  This is
    accomplished by first creating a score for every pixel that tells us how
    likely it is to be a red eye pixel.  We have already done this for you - you
@@ -41,14 +41,64 @@
    at the end.
 
  */
+//=========================================================
+//              Device functions
+//=========================================================
+__global__
+void histogram_kernel(unsigned int pass,
+                      unsigned int * d_bins,
+                      unsigned int* const d_input,
+                      const int size){
+  int id = threadIdx.x + blockDim.x * blockIdx.x;
+  if(id >= size){
+    return;
+  }
 
+}
 
+__global__
+void scan_kernel(unsigned int pass,
+                    unsigned int const * d_inputVals,
+                    unsigned int * d_output,
+                    const int size,
+                    unsigned int base,
+                    unsigned int threadSize){
+  int id = threadIdx.x + blockDim.x * blockIdx.x;
+  if(id >= size){
+    return;
+  }
+
+}
+
+__global__
+void move_kernel(unsigned int pass,
+    unsigned int* const d_inputVals,
+    unsigned int* const d_inputPos,
+    unsigned int* d_outputVals,
+    unsigned int* d_outputPos,
+    unsigned int* d_outputMove,
+    unsigned int* const d_scanned,
+    unsigned int  one_pos,
+    const size_t numElems){
+  int id = threadIdx.x + blockDim.x * blockIdx.x;
+  if(id >= size){
+    return;
+  }
+}
+//=========================================================
+//              Host functions
+//=========================================================
+int get_max_size(int problemSize, int blockSize){
+  return (int)ceil((float)problemSize / (float)blockSize) + 1;
+}
 void your_sort(unsigned int* const d_inputVals,
                unsigned int* const d_inputPos,
                unsigned int* const d_outputVals,
                unsigned int* const d_outputPos,
                const size_t numElems)
-{ 
+{
   //TODO
   //PUT YOUR SORT HERE
+  dim3 blockSize(1024);
+  dim3 gridSize(get_max_size(numElems, blockSize.x));
 }
